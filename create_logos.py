@@ -116,10 +116,10 @@ def build_logo(regionalgruppe, filename, groupdir):
         f.write(head_logo)
 
         if len(regionalgruppe) < MAX_LENGTH:
-            f.write(rf'\regionallogo{{{regionalgruppe.upper()}}}')
+            f.write(rf'\laenderlogo{{{regionalgruppe.upper()}}}')
         else:
             size = 30 * MAX_LENGTH / len(regionalgruppe)
-            f.write(rf'\regionallogo[{size:.1f}]{{{regionalgruppe.upper()}}}')
+            f.write(rf'\laenderlogo[{size:.1f}]{{{regionalgruppe.upper()}}}')
 
         f.write(foot)
         f.flush()
@@ -138,7 +138,7 @@ def build_banner(regionalgruppe, filename, groupdir, padding=False):
         p = '*' if padding else ''
         size = min(30, 30 * MAX_LENGTH / len(regionalgruppe))
 
-        f.write(rf'\regionalbanner{p}[{size:.1f}]{{{regionalgruppe}}}{{{regionalgruppe.upper()}}}')
+        f.write(rf'\laenderbanner{p}[{size:.1f}]{{{regionalgruppe}}}{{{regionalgruppe.upper()}}}')
 
         f.write(foot)
         f.flush()
@@ -154,8 +154,8 @@ def build_all(regionalgruppe):
     os.makedirs(groupdir, exist_ok=True)
 
     build_logo(regionalgruppe, 's4f_logo_' + safe_name, groupdir)
-    build_banner(regionalgruppe, 's4f_banner_' + safe_name, groupdir)
-    build_banner(regionalgruppe, 's4f_banner_padding_' + safe_name, groupdir, padding=True)
+    # build_banner(regionalgruppe, 's4f_banner_' + safe_name, groupdir)
+    # build_banner(regionalgruppe, 's4f_banner_padding_' + safe_name, groupdir, padding=True)
 
     zip_name = f's4f_logos_{safe_name}.zip'
     sp.run(['zip', '-FSr', zip_name, os.path.basename(groupdir)], cwd=OUTDIR)
@@ -164,7 +164,7 @@ def build_all(regionalgruppe):
 if __name__ == '__main__':
     args = parser.parse_args()
 
-    with open('regionalgruppen.txt') as f:
+    with open('countries.txt') as f:
         regionalgruppen = [l.strip() for l in f]
 
     os.makedirs(OUTDIR, exist_ok=True)
